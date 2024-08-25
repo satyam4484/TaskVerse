@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2020",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+
+    },
+    
+    "include": ["src/**/*.ts", "src/config.ts"],
+    "exclude": ["node_modules"]
+}
