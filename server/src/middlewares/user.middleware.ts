@@ -41,7 +41,7 @@ async function userMiddleWare(this: any, next: Function): Promise<void> {
     try{
         // Call validateUserData and hashUserPassword with the correct context
         await validateUserData.call(this);
-        await hashUserPassword.call(this);
+        // await hashUserPassword.call(this);
         next();
     }catch(error) {
         next(new Error("Middleware processing failed: " + error.errors));
