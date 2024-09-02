@@ -1,17 +1,21 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
 
-const axiosClient = (options = {}) => {
-    if (localStorage.getItem("token")) {
-        options = { Authorization: `Bearer ${localStorage.getItem("token")}` };
+const axiosClient = (options: AxiosRequestConfig = {}): AxiosInstance => {
+    const token: string | null = localStorage.getItem("token");
+    if (token) {
+        options.headers = { 
+            ...options.headers, 
+            Authorization: `Bearer ${token}` 
+        };
     }
 
     return axios.create({
-        baseURL: "https://www.jsondataai.com/api/",
+        baseURL: "http://localhost:8000/api/",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            ...options,
-        },
+            ...options.headers,
+        }
     });
 };
 

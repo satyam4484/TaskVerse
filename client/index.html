@@ -8,6 +8,27 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- <script>
+      // Function to get query parameter by name
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log("data incoming from backend--",urlParams);
+        console.log("data incoming from backend for user--",urlParams.get(param));
+        return urlParams.get(param);
+      }
+  
+      // Send the token back to the parent window
+      function sendTokenToParent() {
+        const token = getQueryParam('user'); // Adjust according to your data
+        if (window.opener) {
+          window.opener.postMessage({ token: token }, '*');
+        }
+        window.close();
+      }
+  
+      sendTokenToParent();
+    </script> -->
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

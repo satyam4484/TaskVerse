@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Routes } from 'react-router-dom';
 import Logger from './utils/Logger.ts';
 import "./index.css"
 import { AppProvider } from './context/context.tsx';
@@ -12,9 +12,9 @@ if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
     <AppProvider>
-      <Router>
+      <Routes>
         <App />
-      </Router>
+      </Routes>
     </AppProvider>
   );
 } else {

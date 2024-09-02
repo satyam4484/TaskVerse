@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 
 
 
-const Layout: React.FC<{ children: ReactNode }> = ({ children }: { children: ReactNode }) => {
+const Layout: React.FC<{}> = () => {
     return (
         <>
             <Navbar />
             <div className="container h-screen">
-                {children}
+                <Outlet/>
             </div>
         </>
     )

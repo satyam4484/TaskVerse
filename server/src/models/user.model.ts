@@ -10,6 +10,7 @@ export interface UserInterface {
     contact_no?:string,
     readonly created_at:Date,
     updated_at:Date,
+    googleId: string,
     password:string
 }
 
@@ -22,6 +23,7 @@ const userSchema = new Schema<UserInterface>({
     contact_no:{type:String,maxlength:11},
     created_at:{type:Date,default:Date.now(),immutable:true},
     updated_at:{type:Date,default:Date.now()},
+    googleId:{type: String},
     password:{type:String,required:true}
 },{ versionKey: false });
 

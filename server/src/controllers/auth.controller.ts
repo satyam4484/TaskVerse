@@ -2,17 +2,22 @@ import { Request, Response } from "express"
 import logging from "../utils/logging.js"
 import { sendResponse } from "../utils/responseHelper.js";
 
-export const authenticateUser = async(req: Request, res: Response) => {
+export const authenticateUser = async(req: any, res: Response) => {
     try{
-        console.log(req);
-        
-        return sendResponse(res,201,"User Loggined Sucessfully");
+        // console.log(req);
+        if(req.isAuthenticated()) {
+            console.log("yes---");
+            console.log("us--",req.user);
+            return sendResponse(res,201,"User Loggined Sucessfully",req.user);
+        }else{
+            return sendResponse(res,404,"User Not Found");
+        }
     }catch(error){
         return sendResponse(res, 400, "Error while logging from google", null, error);
     }
 }
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (req: any, res: Response) => {
     try {
         logging.warn("Logging out user:", req.user);
 

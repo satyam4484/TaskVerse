@@ -1,13 +1,16 @@
 import React from "react";
-import { useGlobalContext } from "../../context/context";
+import { NavLink } from "react-router-dom";
+import { AppContextProps,useGlobalContext } from "../../context/context";
+import Theme from "../UI/Theme";
+
 
 const Navbar: React.FC<{}> = () => {
-    const {setTheme} = useGlobalContext();
+    const {setTheme }: Partial<AppContextProps> = useGlobalContext();
 
     return (
-        <div className="navbar bg-base-100 shadow-lg mb-10">
+        <div className="navbar bg-base-100 shadow-lg">
             <div className="flex-1">
-                <a className="btn btn-ghost text-2xl">TaskVerse</a>
+                <NavLink to="/" className="btn btn-ghost text-2xl">TaskVerse</NavLink>
             </div>
             <div className="flex-none gap-2">
                 <div className="form-control">
@@ -23,20 +26,14 @@ const Navbar: React.FC<{}> = () => {
                     </div>
                     <ul tabIndex={0} className="menu dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li>
-                        <a className="justify-between">
-                            Profile <span className="badge">New</span>
-                        </a>
+                            <NavLink to="/profile" className="justify-between">
+                                Profile <span className="badge">New</span>
+                            </NavLink>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
-                        <li className="group sm:dropdown-left">
-                            <a className="justify-between cursor-pointer">
-                                Theme
-                            </a>
-                            <ul className="sm:m-auto mt-10 dropdown-content menu menu-sm bg-base-100 w-52 rounded-box z-[1] p-2 shadow hidden group-hover:block borderd">
-                                <li onClick={setTheme("dark")}><a>Dark Mode</a></li>
-                                <li onClick={setTheme("cupcake")}><a>Light Mode</a></li>
-                            </ul>
+                        <li><NavLink to="/settings">Settings</NavLink></li>
+                        <li><NavLink to="/Logout">Logout</NavLink></li>
+                        <li onClick={setTheme}>
+                            <Theme/>
                         </li>
                     </ul>
                 </div>

@@ -1,18 +1,15 @@
-import React,{useReducer,useContext, useMemo, Context, useState, ReactNode} from "react";
+import React,{useReducer,useContext, useMemo, Context, ReactNode} from "react";
+import {AppReducer, InitialAppState } from "../reducers";
 import Logger from "../utils/Logger";
 
 // Define the shape of the state
-interface State {
-    isLoggedIn: boolean;
-    isLoading: boolean;
-    theme:string;
+
+export interface AppContextProps extends InitialAppState {
+    toggleSpin: () => void;
+    setTheme: () => void;
 };
 
-interface AppContextProps extends State {
-    toggleSpin: (data:boolean) => void;
-};
-
-const initialState: State = {
+const initialState: InitialAppState = {
     isLoggedIn: false,
     isLoading: false,
     theme:"cupcake",
@@ -23,22 +20,23 @@ const AppContext: Context<AppContextProps | undefined > = React.createContext<Ap
 
 
 const AppProvider: React.FC<{children: ReactNode}> = ({children}:{children: ReactNode})  => {
-    const [state, setState] = useState(initialState);
+    const [state, dispatch] = useReducer(AppReducer,initialState);
 
-    const toggleSpin = (data: boolean) : void => {
-        Logger.info("Toggling the Spin");
+    const toggleSpin = () : void => {
+        Logger.info("Toggling the spinner");
+        dispatch({type:"TOGGLE_SPINNER"});
     }
 
-    const setTheme = (data: string): void => {
-        setState({...state,theme:data});
+    const setTheme = (): void => {
+        dispatch({type:"TOGGLE_THEME"});
     }
 
     // Memoize the context value to prevent unnecessary re-renders
-    const contextValue = useMemo(() => ({
+    const contextValue: AppContextProps = useMemo(() => ({
         ...state,
         toggleSpin,
         setTheme
-    }), [state, toggleSpin]);
+    }), [state]);
     return (
         <AppContext.Provider 
         value={contextValue}

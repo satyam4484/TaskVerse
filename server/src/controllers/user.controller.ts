@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import User ,{UserInterface} from "../models/user.model.js";
 import { sendResponse } from "../utils/responseHelper.js";
+import logging from "../utils/logging.js";
+
+export interface AuthenticatedRequest extends Request {
+    user?: Partial<UserInterface> // Adjust the type according to your user model
+}
 
 export const userExists = async (req: Request, res: Response) => {
     try{
@@ -25,13 +30,14 @@ export const createUser = async (req: Request, res: Response) => {
     }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUser = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
+        logging.info("Getting User Details...");
+        if (!req.user) {
             return sendResponse(res, 404, "User not found");
         }
-        return sendResponse(res, 200, "User fetched successfully", user);
+        
+        return sendResponse(res, 200, "User fetched successfully", req.user);
     } catch (error) {
         return sendResponse(res, 400, "Error fetching user", null, error);
     }

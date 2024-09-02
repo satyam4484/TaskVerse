@@ -26,7 +26,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-    origin:'*'
+    origin: 'http://localhost:5173', // Specify the frontend origin explicitly
+    credentials: true,
 }))
 
 app.use('/api',router);

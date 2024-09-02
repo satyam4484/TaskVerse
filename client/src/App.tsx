@@ -1,18 +1,34 @@
-import React from "react";
-import Layout from "./Components/Layout/Layout";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "./context/context";
+import Spinner from "./Components/UI/Spinner";
+import Routing from "./routing/Routing";
+import Logger from "./utils/Logger";
 
 const App: React.FC = () => {
-  const {theme} = useGlobalContext();
+  const { theme, toggleSpin, isLoading } = useGlobalContext();
+  const navigate = useNavigate();
 
-  console.log("theme--",theme)
+  useEffect(() => {
+    toggleSpin();
+    if(localStorage.getItem("user")){
+      Logger.info("User found already");
+      
+    }else{
+      Logger.warn("User not found so Redirecting to Logging page");
+      navigate('/login');
+    }
+    toggleSpin();
+  },[]);
+
 
   return (
-    <div data-theme={theme}>
-    <Layout>
-      <div className="min-h-full">hello</div>
-    </Layout>
-    </div>
+    <>
+      {isLoading && <Spinner/>}
+      <div data-theme={theme}>
+        <Routing />
+      </div>
+    </>
   );
 };
 

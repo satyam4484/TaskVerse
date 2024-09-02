@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { createUser, getUserById, updateUserById, deleteUserById } from "../controllers/user.controller.js"
+import { createUser, getUser, updateUserById, deleteUserById } from "../controllers/user.controller.js"
+import verifyToken from "../middlewares/verifyToken.js";
 
 const router = Router();
 
@@ -7,7 +8,7 @@ const router = Router();
 router.post("/", createUser);
 
 // Get a user by ID
-router.get("/:id", getUserById);
+router.get("/",verifyToken, getUser);
 
 // Update a user by ID
 router.put("/:id", updateUserById);
