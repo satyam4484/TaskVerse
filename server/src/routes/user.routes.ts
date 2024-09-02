@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { createUser, getUser, updateUserById, deleteUserById } from "../controllers/user.controller.js"
+import { createUser, getUser, updateUserById, deleteUserById , userExists} from "../controllers/user.controller.js"
 import verifyToken from "../middlewares/verifyToken.js";
 
 const router = Router();
 
 // Create a new user
 router.post("/", createUser);
+
+router.post("/validate", userExists);
 
 // Get a user by ID
 router.get("/",verifyToken, getUser);

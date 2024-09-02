@@ -9,7 +9,7 @@ router.get('/google/callback',passport.authenticate('google',{
 }),(req: any,res) => {
     console.log("inside this-----",req.user);
     
-    res.redirect(`http://localhost:5173?user`)
+    res.redirect(`http://localhost:5173`)
 });  
 router.get('/google/login',authenticateUser);
 router.get('/google/logout',logoutUser);

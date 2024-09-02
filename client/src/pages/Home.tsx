@@ -1,31 +1,35 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
+import { useGlobalContext } from '../context/context';
+import {authDetailsEndPoint, userEndPoint} from "../network/agent";
 
 const Home: React.FC<{}> = () => {
+    const {userLogin} = useGlobalContext();
     const navigate = useNavigate();
-    console.log("inside the home componente")
     const getUser = async () => {
-        console.log("calling the get user");
-		try {
-			const url = `http://localhost:8000/auth/google/login`;
-			const {data} = await axios.get(url,{ withCredentials: true });
-            if(data.sucess === true) {
-
+        const data = await authDetailsEndPoint.continueWithGoogle().then(res => res.data);
+        if(data?.token) {
+            // login user and redirect to dashboard
+            localStorage.setItem("token",data.token);
+            const userDetails = await userEndPoint.getUserProfile().then(res => res.data);
+            if(userDetails) {
+                userLogin(userDetails);
+                navigate('/dashboard');
+            }else{
+                navigate('/login');
             }
-            console.log("data---",data);
-            // if(res.status == 400) {
-            //     navigate('/login');
-            // }
-
-		} catch (err) {
-            navigate('/login');
-			console.log(err);
-		}
+        }else{
+            // redirect user to page from where he will fill all the details
+            navigate('/user/onboarding',{state:data});
+        }
 	};
     useEffect(() => {
-        getUser();
+        const token = localStorage.getItem("token");
+        if(token === null) {
+            getUser();
+        }else{
+            navigate('/dashboard');
+        }
     },[]);
 
     return (

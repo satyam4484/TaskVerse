@@ -12,7 +12,7 @@ async function validateUserData(this: any, next: Function): Promise<void> {
         await userValidationSchema.validate(this.toObject(), { abortEarly: false });
         logging.success("User Data validation completed successfully");
     }catch(error) {
-        next(new Error("User validation failed: " + error.errors));
+        next(new Error("User validation failed: " + error));
     }
     
 }
@@ -44,7 +44,7 @@ async function userMiddleWare(this: any, next: Function): Promise<void> {
         // await hashUserPassword.call(this);
         next();
     }catch(error) {
-        next(new Error("Middleware processing failed: " + error.errors));
+        next(new Error("Middleware processing failed: " + error));
     }
 }
 

@@ -7,7 +7,6 @@ export interface UserInterface {
     readonly email:string,
     first_name:string
     last_name:string,
-    contact_no?:string,
     readonly created_at:Date,
     updated_at:Date,
     googleId: string,
@@ -20,11 +19,10 @@ const userSchema = new Schema<UserInterface>({
     email:{type:String,required:true,unique:true},
     first_name:{type:String,maxlength:20},
     last_name:{type:String,maxlength:20},
-    contact_no:{type:String,maxlength:11},
     created_at:{type:Date,default:Date.now(),immutable:true},
     updated_at:{type:Date,default:Date.now()},
     googleId:{type: String},
-    password:{type:String,required:true}
+    password:{type:String}
 },{ versionKey: false });
 
 

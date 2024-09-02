@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User ,{UserInterface} from "../models/user.model.js";
 import { sendResponse } from "../utils/responseHelper.js";
 import logging from "../utils/logging.js";
+import { generateAuthToken } from "../utils/services.js";
 
 export interface AuthenticatedRequest extends Request {
     user?: Partial<UserInterface> // Adjust the type according to your user model
@@ -10,8 +11,9 @@ export interface AuthenticatedRequest extends Request {
 export const userExists = async (req: Request, res: Response) => {
     try{
         const data: Partial<UserInterface>= req.body;
-        const user = await User.find({...data});
-        if(user) {
+        const user = await User.findOne({...data});
+        console.log("user--",user)
+        if(user!==null) {
             return sendResponse(res,400,"User Exists.");
         }
         return sendResponse(res,200,"User not found.");
@@ -24,7 +26,10 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const newUser = new User(req.body);
         const savedUser = await newUser.save();
-        return sendResponse(res,201,"User created successfully",savedUser)
+        logging.info("saveduser--",savedUser);
+        const token = generateAuthToken(savedUser._id);
+        console.log("user_token--",token)
+        return sendResponse(res,201,"User created successfully",{token})
     } catch (error) {
         return sendResponse(res, 400, "Error creating user", null, error);
     }

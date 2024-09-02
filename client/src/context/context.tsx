@@ -7,11 +7,13 @@ import Logger from "../utils/Logger";
 export interface AppContextProps extends InitialAppState {
     toggleSpin: () => void;
     setTheme: () => void;
+    userLogin: (data: any) => void;
 };
 
 const initialState: InitialAppState = {
     isLoggedIn: false,
     isLoading: false,
+    user: {},
     theme:"cupcake",
 }
 
@@ -31,11 +33,16 @@ const AppProvider: React.FC<{children: ReactNode}> = ({children}:{children: Reac
         dispatch({type:"TOGGLE_THEME"});
     }
 
+    const userLogin = (data:any) => {
+        dispatch({type: "LOGIN_USER",data});
+    }
+
     // Memoize the context value to prevent unnecessary re-renders
     const contextValue: AppContextProps = useMemo(() => ({
         ...state,
         toggleSpin,
-        setTheme
+        setTheme,
+        userLogin
     }), [state]);
     return (
         <AppContext.Provider 
