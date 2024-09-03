@@ -6,8 +6,6 @@ export const authenticateUser = async(req: any, res: Response) => {
     try{
         // console.log(req);
         if(req.isAuthenticated()) {
-            console.log("yes---");
-            console.log("us--",req.user);
             return sendResponse(res,201,"User Loggined Sucessfully",req.user);
         }else{
             return sendResponse(res,404,"User Not Found");

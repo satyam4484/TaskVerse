@@ -30,6 +30,7 @@ const AppProvider: React.FC<{children: ReactNode}> = ({children}:{children: Reac
     }
 
     const setTheme = (): void => {
+        console.log("st--",state);
         dispatch({type:"TOGGLE_THEME"});
     }
 

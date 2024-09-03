@@ -12,7 +12,6 @@ export const userExists = async (req: Request, res: Response) => {
     try{
         const data: Partial<UserInterface>= req.body;
         const user = await User.findOne({...data});
-        console.log("user--",user)
         if(user!==null) {
             return sendResponse(res,400,"User Exists.");
         }
@@ -26,9 +25,7 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const newUser = new User(req.body);
         const savedUser = await newUser.save();
-        logging.info("saveduser--",savedUser);
         const token = generateAuthToken(savedUser._id);
-        console.log("user_token--",token)
         return sendResponse(res,201,"User created successfully",{token})
     } catch (error) {
         return sendResponse(res, 400, "Error creating user", null, error);

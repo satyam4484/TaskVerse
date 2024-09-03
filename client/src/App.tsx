@@ -30,7 +30,7 @@ const App: React.FC = () => {
     toggleSpin();
   }, []);
 
-
+  console.log("theme--",theme)
   return (
     <>
       {isLoading && <Spinner />}

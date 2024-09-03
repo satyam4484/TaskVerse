@@ -6,7 +6,6 @@ import Theme from "../UI/Theme";
 
 const Navbar: React.FC<{}> = () => {
     const {user, setTheme }: Partial<AppContextProps> = useGlobalContext();
-    console.log("use---",user)
 
     return (
         <div className="navbar bg-base-100 shadow-lg">
@@ -33,7 +32,7 @@ const Navbar: React.FC<{}> = () => {
                         </li>
                         <li><NavLink to="/settings">Settings</NavLink></li>
                         <li><NavLink to="/Logout">Logout</NavLink></li>
-                        <li onClick={setTheme}>
+                        <li onClick={() => setTheme()}>
                             <Theme/>
                         </li>
                     </ul>
