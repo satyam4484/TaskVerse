@@ -38,7 +38,6 @@ export const getUser = async (req: AuthenticatedRequest, res: Response) => {
         if (!req.user) {
             return sendResponse(res, 404, "User not found");
         }
-        
         return sendResponse(res, 200, "User fetched successfully", req.user);
     } catch (error) {
         return sendResponse(res, 400, "Error fetching user", null, error);
@@ -52,11 +51,9 @@ export const updateUserById = async (req: Request, res: Response) => {
             { ...req.body, updated_at: Date.now() },
             { new: true, runValidators: true }
         );
-
         if (!updatedUser) {
             return sendResponse(res, 404, "User not found");
         }
-
         return sendResponse(res, 200, "User updated successfully", updatedUser);
     } catch (error) {
         return sendResponse(res, 400, "Error updating user", null, error);
@@ -66,11 +63,9 @@ export const updateUserById = async (req: Request, res: Response) => {
 export const deleteUserById = async (req: Request, res: Response) => {
     try {
         const deletedUser = await User.findByIdAndDelete(req.params.id);
-
         if (!deletedUser) {
             return sendResponse(res, 404, "User not found");
         }
-
         return sendResponse(res, 200, "User deleted successfully");
     } catch (error) {
         return sendResponse(res, 400, "Error deleting user", null, error);
