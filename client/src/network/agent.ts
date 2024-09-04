@@ -18,6 +18,30 @@ export const userEndPoint = {
     
 }
 
+export const dashboardEndPoint = {
+    baseUrl: '/dashboards',
+
+    async getAllDashboards(): Promise<any> {
+        return axiosClient().get(this.baseUrl).then(response => response.data);
+    },
+
+    async getDashboardById(id: string): Promise<any> {
+        return axiosClient().get(`${this.baseUrl}/${id}`).then(response => response.data);
+    },
+
+    async createDashboard(data: any): Promise<any> {
+        return axiosClient().post(this.baseUrl, JSON.stringify(data)).then(response => response.data);
+    },
+
+    async updateDashboard(id: string, data: any): Promise<any> {
+        return axiosClient().put(`${this.baseUrl}/${id}`, JSON.stringify(data)).then(response => response.data);
+    },
+
+    async deleteDashboard(id: string): Promise<any> {
+        return axiosClient().delete(`${this.baseUrl}/${id}`).then(response => response.data);
+    }
+};
+
 
 export const authDetailsEndPoint = {
     baseUrl: '/auth/google',

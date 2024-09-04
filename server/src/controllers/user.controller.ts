@@ -5,7 +5,9 @@ import logging from "../utils/logging.js";
 import { generateAuthToken } from "../utils/services.js";
 
 export interface AuthenticatedRequest extends Request {
-    user?: Partial<UserInterface> // Adjust the type according to your user model
+    user: {
+        _id: string;
+    } & Partial<UserInterface>;
 }
 
 export const userExists = async (req: Request, res: Response) => {

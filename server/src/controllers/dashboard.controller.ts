@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import Dashboard, { DashboardInterface } from "../models/dashboard.model.js";
 import { sendResponse } from "../utils/responseHelper.js";
-
+import { AuthenticatedRequest } from "./user.controller.js";
 // Create a new dashboard
-export const createDashboard = async (req: Request, res: Response) => {
+
+export const createDashboard = async (req: AuthenticatedRequest, res: Response) => {
     try {
         const dashboardData: DashboardInterface = req.body;
-        const newDashboard = new Dashboard(dashboardData);
+        const newDashboard = new Dashboard({...dashboardData,user: req.user._id});
         await newDashboard.save();
         return sendResponse(res, 201, "Dashboard created successfully.", newDashboard);
     } catch (error) {
@@ -15,9 +16,9 @@ export const createDashboard = async (req: Request, res: Response) => {
 };
 
 // Get all dashboards
-export const getAllDashboards = async (req: Request, res: Response) => {
+export const getAllDashboards = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const dashboards = await Dashboard.find();
+        const dashboards = await Dashboard.find({user: req.user._id});
         return sendResponse(res, 200, "Dashboards retrieved successfully.", dashboards);
     } catch (error) {
         return sendResponse(res, 400, "Error retrieving dashboards", null, error);

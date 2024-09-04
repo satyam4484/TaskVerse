@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardForm from "./DashboardForm"
+import { dashboardEndPoint } from "../../network/agent";
 
 const Dashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,10 +9,15 @@ const Dashboard = () => {
     const closeModal = () => setIsModalOpen(false);
     const [dashBoards, setDashBoards] = useState([]);
 
+    const getDashboard = async () => {
+        const data = await dashboardEndPoint.getAllDashboards();
+        console.log("dyyy--",data);
+    }
+
     useEffect(() => {
-        
-    },[]);
-    
+        getDashboard();
+    }, []);
+
     return (
 
         <>
@@ -41,7 +47,7 @@ const Dashboard = () => {
                 </div>
             </div>
             <DashboardForm isOpen={isModalOpen} closeModal={closeModal} />
-            
+
         </>
     )
 }
