@@ -5,7 +5,7 @@ import appConfigs from "../config.js";
 import { sendResponse } from "../utils/responseHelper.js";
 import { AuthenticatedRequest } from "../controllers/user.controller.js";
 
-export default async function verifyToken(req: AuthenticatedRequest,res: Response,next: NextFunction): Promise<any> {
+export default async function verifyToken(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<any> {
     try {
         const bearerHeader: string = req.headers['authorization'];
 
@@ -15,10 +15,11 @@ export default async function verifyToken(req: AuthenticatedRequest,res: Respons
             const tokenVerify: any = await jwt.verify(token, appConfigs.SECRET_KEY);
 
             if (tokenVerify) {
-                const user: UserInterface | null = await User.findOne({ _id: tokenVerify._id }, { password: 0 });
+                // Ensure the user fetched from the database is of the correct type
+                const user = await User.findOne({ _id: tokenVerify._id }, { password: 0 }) as (UserInterface & { _id: string }) | null;
 
                 if (user) {
-                    req.user = user;
+                    req.user = user; // req.user is of type AuthenticatedRequest, which should include user
                     next();
                 } else {
                     throw "User not found!";
