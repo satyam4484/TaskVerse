@@ -35,10 +35,10 @@ const DashboardForm: React.FC<DashboardFormProps> = ({ isOpen, closeModal }) => 
         }
 
         const data = await dashboardEndPoint.createDashboard(dashboard);
-        if(data.success === true) {
+        if (data.success === true) {
 
-        }else{
-            return ;
+        } else {
+            return;
         }
 
     }
@@ -65,13 +65,14 @@ const DashboardForm: React.FC<DashboardFormProps> = ({ isOpen, closeModal }) => 
                                 placeholder="short desc min 15 words" />
                         </div>
 
-                        <button className='btn btn-primary my-5'>Add workspace</button>
+                        <button type='submit' className='btn btn-success my-5'>Add workspace</button>
 
                     </div>
-                    <div className="modal-action">
-                        <button type='submit' className="btn btn-warning" onClick={closeModal}>Close</button>
-                    </div>
+
                 </form>
+                <div className="modal-action">
+                    <button className="btn bg-red-400" onClick={closeModal}>Close</button>
+                </div>
             </div>
         </dialog>
     );

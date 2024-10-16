@@ -6,11 +6,10 @@ import Theme from "../UI/Theme";
 
 const Navbar: React.FC<{}> = () => {
     const {user, setTheme }: Partial<AppContextProps> = useGlobalContext();
-
     return (
         <div className="navbar bg-base-100 shadow-lg">
             <div className="flex-1">
-                <NavLink to="/" className="btn btn-ghost text-2xl">TaskVerse</NavLink>
+                <NavLink to="/" className="btn btn-ghost text-3xl mx-10">TaskVerse</NavLink>
             </div>
             <div className="flex-none gap-2">
                 <div className="form-control">
@@ -21,7 +20,7 @@ const Navbar: React.FC<{}> = () => {
                         <div className="w-10 rounded-full">
                             <img
                                 alt="Tailwind CSS Navbar component"
-                                src={user.avatar} />
+                                src={user?.avatar} />
                         </div>
                     </div>
                     <ul tabIndex={0} className="menu dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const AuthForm: React.FC<{ formType: string }> = ({ formType }) => {
     const redirectType: string = (formType === "login" ? "Don't have" : "Already");
-
+    console.log("inside th form");
     
     const continueWithGoogleHandler = () => {
 

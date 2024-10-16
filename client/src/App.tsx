@@ -6,7 +6,7 @@ import Spinner from "./Components/UI/Spinner";
 import Routing from "./routing/Routing";
 
 const App: React.FC = () => {
-  const { theme, toggleSpin, isLoading, userLogin } = useGlobalContext();
+  const { isLoggedIn, theme, toggleSpin, isLoading, userLogin } = useGlobalContext();
   const navigate = useNavigate();
 
   const checkUserCredentials = async () => {
@@ -21,16 +21,17 @@ const App: React.FC = () => {
 
   useEffect(() => {
     toggleSpin();
-    const token = localStorage.getItem("token");
-    if (token) {
-      checkUserCredentials();
-    } else {
-      navigate('/login');
+    if (!isLoggedIn) {
+      const token = localStorage.getItem("token");
+      console.log("token,", token);
+
+      if (token) {
+        checkUserCredentials();
+      }
     }
     toggleSpin();
   }, []);
 
-  console.log("theme--",theme)
   return (
     <>
       {isLoading && <Spinner />}

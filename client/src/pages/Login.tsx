@@ -7,6 +7,7 @@ import { useEffect } from "react";
 const Login = () => {
     const {isLoggedIn} = useGlobalContext();
     const navigate = useNavigate();
+    console.log("innside the login");
 
     useEffect(() => {
         if(isLoggedIn){
