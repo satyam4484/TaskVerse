@@ -5,6 +5,7 @@ import { dashboardEndPoint } from '../../network/agent';
 interface DashboardFormProps {
     isOpen: boolean;
     closeModal: () => void;
+    addWorkspaces: (data: any)=> void;
 }
 
 
@@ -13,7 +14,7 @@ const initalDashBoardState = {
     description: ''
 }
 
-const DashboardForm: React.FC<DashboardFormProps> = ({ isOpen, closeModal }) => {
+const DashboardForm: React.FC<DashboardFormProps> = ({ isOpen, closeModal , addWorkspaces}) => {
 
     const [dashboard, setDashBoard] = useState(initalDashBoardState);
 
@@ -35,8 +36,10 @@ const DashboardForm: React.FC<DashboardFormProps> = ({ isOpen, closeModal }) => 
         }
 
         const data = await dashboardEndPoint.createDashboard(dashboard);
+        console.log("data===",data);
         if (data.success === true) {
-
+            addWorkspaces(data?.data);
+            closeModal();
         } else {
             return;
         }

@@ -12,11 +12,14 @@ const Dashboard = () => {
 
     const getDashboard = async () => {
         const data = await dashboardEndPoint.getAllDashboards();
-        console.log("datat--", data);
-
-        setDashBoards(data);
-
+        setDashBoards(data.data);
     }
+
+    const addWorkspaces = async (data: any) => {
+        setDashBoards([...dashBoards, data ]);
+    }
+
+    console.log("dashboards",dashBoards);
 
     useEffect(() => {
         getDashboard();
@@ -33,42 +36,20 @@ const Dashboard = () => {
 
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 md:gap-3 h-auto p-5 sm:gap-1 text-center ">
 
-                    <div className="md:w-[400] sm:w-[600] h-14 sm:py-7 sm:px-3 m-3 mb-20 text-center">
-                        <div className="card rounded-xl card-compact bg-base-200 shadow-xl">
-                            <a className="cursor-pointer card-body">
-                                <h2 className="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                            </a>
+                    {dashBoards.map(workspaces => (
+                        <div key={workspaces._id} className="md:w-[400] sm:w-[600] h-14 sm:py-7 sm:px-3 m-3 mb-20 text-center">
+                            <div className="card rounded-xl card-compact hover:bg-gray-300 bg-base-200 shadow-xl">
+                                <a className="cursor-pointer card-body">
+                                    <h2 className="card-title">{workspaces.name}</h2>
+                                    <p>{workspaces.description}</p>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div className="md:w-[400] sm:w-[600] h-14 sm:py-7 sm:px-3 m-3 text-center">
-                        <div className="card rounded-xl card-compact bg-base-200 shadow-xl">
-                            <a className="cursor-pointer card-body">
-                                <h2 className="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="md:w-[400] sm:w-[600] h-14 sm:py-7 sm:px-3 m-3 text-center">
-                        <div className="card rounded-xl card-compact bg-base-200 shadow-xl">
-                            <a className="cursor-pointer card-body">
-                                <h2 className="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="md:w-[400] sm:w-[600] h-14 sm:py-7 sm:px-3 m-3 text-center">
-                        <div className="card rounded-xl card-compact bg-base-200 shadow-xl">
-                            <a className="cursor-pointer card-body">
-                                <h2 className="card-title">Shoes!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                            </a>
-                        </div>
-                    </div>
+                    ))}
 
                 </div>
             </div>
-            <DashboardForm isOpen={isModalOpen} closeModal={closeModal} />
+            <DashboardForm isOpen={isModalOpen} closeModal={closeModal} addWorkspaces={addWorkspaces} />
 
         </>
     )

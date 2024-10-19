@@ -8,6 +8,7 @@ export const createDashboard = async (req: AuthenticatedRequest, res: Response) 
     try {
         const dashboardData: DashboardInterface = req.body;
         const newDashboard = new Dashboard({...dashboardData,user: req.user._id});
+        console.log("dashh",newDashboard);
         await newDashboard.save();
         return sendResponse(res, 201, "Dashboard created successfully.", newDashboard);
     } catch (error) {
